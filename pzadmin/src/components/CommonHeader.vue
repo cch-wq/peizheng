@@ -9,13 +9,12 @@
                     <el-icon :size="13">
                         <component :is="item.meta.icon" />
                     </el-icon>
-                  <router-link :to="{path:item.meta.path}">  {{ item.meta.name }}</router-link>
+                  <router-link :to="{path:item.meta.path}" class="text">  {{ item.meta.name }}</router-link>
                     <el-icon :size="13" class="close-icon">
                         <Close />
                     </el-icon>
                 </li>
             </ul>
-
         </div>
         <div class="header-right">
             <el-dropdown>
@@ -77,6 +76,9 @@ console.log(tags)
             align-items: center;
             height: 100%;
             gap: 20px;
+            .text{
+                
+            }
              .close-icon{
                 visibility: hidden;
              }

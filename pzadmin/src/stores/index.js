@@ -11,7 +11,6 @@ export const useMenuStore = defineStore('menu', () => {
     function addMenu(val) {
        if( state.value.tags.findIndex(item => item.meta.name === val.meta.name) ===-1){
         state.value.tags.push(val)
-      
        }
     }
     return {

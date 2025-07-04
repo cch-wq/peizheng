@@ -7,19 +7,19 @@ import Admin from '../views/auth/admin/index.vue'
 import Group from '../views/auth/group/index.vue'
 import Dashboard from '../views/dashboard/index.vue'
 const routes = [
-    {
-        path:'/',
-        component :Layout,
-        name:'main',
-        children:[
-            {
+  {
+    path: '/',
+    component: Layout,
+    name: 'main',
+    children: [
+      {
         path: 'dashboard',
         meta: { id: '1', name: '控制台', icon: 'Platform', path: '/dashboard', describe: '用于展示当前系统中的统计数据、统计报表及重要实时数据' },
         component: Dashboard
       },
       {
         path: 'auth',
-        meta: { id: '2' ,name: '权限管理', icon: 'Grid' },
+        meta: { id: '2', name: '权限管理', icon: 'Grid' },
         children: [
           {
             path: '',
@@ -33,18 +33,18 @@ const routes = [
             component: Group
           }
         ]
-    }
-        ]
-    },
-     {
-        path:'/Login',
-        component :Login
-    },
-  
+      }
+    ]
+  },
+  {
+    path: '/Login',
+    component: Login
+  },
+
 ]
 
 const router = createRouter({
-    routes,
-    history:createWebHashHistory()
+  routes,
+  history: createWebHashHistory()
 })
 export default router
