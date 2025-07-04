@@ -1,6 +1,6 @@
 <template>
 <div class="">
-<h1>3333</h1></div>
+<h1>控制</h1></div>
 </template>
 
 <script>
