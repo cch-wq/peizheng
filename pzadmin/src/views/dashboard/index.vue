@@ -1,6 +1,8 @@
 <template>
-<div class="">
-<h1>控制</h1></div>
+
+<el-dialog>
+    
+</el-dialog>
 </template>
 
 <script>

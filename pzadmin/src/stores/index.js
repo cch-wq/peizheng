@@ -13,7 +13,7 @@ export const useMenuStore = defineStore('menu', () => {
         state.value.tags.push(val)
        }
     }
-  function closeMenu( item) {
+  function closeMenu(item){
     const index = state.value.tags.findIndex(val => val.name === item.name)
    
     

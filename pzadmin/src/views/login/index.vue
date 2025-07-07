@@ -26,7 +26,9 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="submitForm(loginFormRef)" :style="{width: '100%'}">{{ formType ?  '注册':'登录'  }}</el-button>
+                    <el-button type="primary" @click="submitForm(loginFormRef)" :style="{ width: '100%' }">{{ formType ?
+                        '注册' : '登录'
+                        }}</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -36,8 +38,9 @@
 <script setup>
 import { Lock, UserFilled } from '@element-plus/icons-vue';
 import { ref, reactive } from 'vue';
-import {getCode} from '../../api'
-import { ElMessage } from 'element-plus';
+import { getCode, login, userAuthentication } from '../../api'
+
+import { useRouter } from 'vue-router';
 
 const formType = ref(0)
 const imgUrl = new URL('../../assets/login-head.png', import.meta.url).href
@@ -65,7 +68,7 @@ const countdownChange = () => {
         })
     }
     //验证码60s的计时器
-    const time=setInterval(() => {
+    const time = setInterval(() => {
         if (countdown.time <= 0) {
             countdown.time = 60
             countdown.validText = '获取验证码'
@@ -77,9 +80,9 @@ const countdownChange = () => {
         }
     }, 1000)
     flag = true
-    getCode({tel:loginForm.userName}).then(({data})=>{
+    getCode({ tel: loginForm.userName }).then(({ data }) => {
         console.log(data)
-        if(data.code===10000){
+        if (data.code === 10000) {
             ElMessage.success('发送成功')
         }
     })
@@ -108,8 +111,41 @@ const rules = reactive({
     passWord: [{ validator: validatePass, trigger: 'blur' }],
 })
 
-const loginFormRef=ref()
-const submitForm=()=>{}
+const loginFormRef = ref()
+const router = useRouter()
+const submitForm = async (formEL) => {
+    if (!formEL) return
+    //手动触发校验
+    await formEL.validate((valid, fields) => {
+        if (valid) {
+            //注册页面
+            if (formType.value) {
+                userAuthentication(loginForm).then(({ data }) => {
+                    if (data.code = 10000) {
+                        ElMessage.success('注册成功，请登录')
+                        formType.value = 0
+                    }
+
+                })
+            } else {
+                login(loginForm).then(({ data }) => {
+                    if (data.code === 10000) {
+                        ElMessage.success('登录成功')
+                        //将token和userinfo缓存找到浏览器
+                        localStorage.setItem('pz_token', data.data.token)
+                        localStorage.setItem('pz_userInfo', JSON.stringify(data.data.userInfo))
+                        router.push('/')
+                    }
+                })
+            }
+            console.log('submit!')
+        } else {
+            console.log('error submit!', fields)
+        }
+
+    })
+}
+
 </script>
 
 <style lang="less" scoped>

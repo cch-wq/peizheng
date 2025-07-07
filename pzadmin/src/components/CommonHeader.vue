@@ -10,7 +10,7 @@
                         <component :is="item.meta.icon" />
                     </el-icon>
                     <router-link :to="{ path: item.meta.path }" class="text"> {{ item.meta.name }}</router-link>
-                    <el-icon :size="13" class="close-icon" @click="closeTab(item)">
+                    <el-icon :size="13" class="close-icon" @click="closeTab(item,index)">
                         <Close />
                     </el-icon>
                 </li>
@@ -44,9 +44,9 @@ const store = useMenuStore()
 const handlemenu = () => { store.state.isCollapse = !store.state.isCollapse }
 const tags = computed(() => store.state.tags)
 console.log(tags)
-const closeTab=(item)=>{
+const closeTab=(item,index)=>{
     store.closeMenu(item)
-    if(item.path != route.path){
+    if(item.path !== route.path){
         return
     }
     const tagsData =tags.value

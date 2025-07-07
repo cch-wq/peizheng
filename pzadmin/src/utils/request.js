@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ElMessage } from "element-plus";
 
 const http = axios.create({
     baseURL:'https://v3pz.itndedu.com/v3pz',
@@ -27,6 +26,11 @@ http.interceptors.response.use(function (response){
     //对接口异常的数据，给用户提示
     if(response.data.code ===-1){
         ElMessage.warning(response.data.message)
+    }
+    if(response.data.code ===-2){
+        localStorage.removeItem('pz_token')
+        localStorage.removeItem('pz_userInfo')
+        window.location.href=window.location.origin
     }
     return response
 },function(error){
